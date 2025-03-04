@@ -3,7 +3,7 @@
     "port": 8080,
     "host": "0.0.0.0",
     "timeout": 30,
-    "maxConnections": 1000
+    "maxConnections": 100
   },
   "logging": {
     "enabled": true,

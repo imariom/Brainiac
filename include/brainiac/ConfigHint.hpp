@@ -3,7 +3,7 @@
 
 namespace brainiac {
 
-enum class config_hint : unsigned short
+enum class ConfigHint : unsigned short
 {
     unknown = 0,
 
