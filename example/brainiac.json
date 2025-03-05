@@ -15,16 +15,6 @@
     "maxSize": "100MB",
     "ttl": 300
   },
-  "rateLimiting": {
-    "enabled": true,
-    "requestsPerMinute": 100,
-    "blockDuration": 60
-  },
-  "authentication": {
-    "enabled": true,
-    "username": "admin",
-    "password": "securepassword123"
-  },
   "ipFiltering": {
     "enabled": true,
     "whitelist": ["192.168.1.1", "10.0.0.0/8"],
@@ -34,11 +24,6 @@
     "enabled": true,
     "certPath": "/etc/ssl/certs/proxy-cert.pem",
     "keyPath": "/etc/ssl/private/proxy-key.pem"
-  },
-  "loadBalancing": {
-    "enabled": false,
-    "servers": ["http://backend1.example.com", "http://backend2.example.com"],
-    "algorithm": "round-robin"
   },
   "metrics": {
     "enabled": true,

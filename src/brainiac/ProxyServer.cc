@@ -41,7 +41,8 @@ void ProxyServer::run()
 void ProxyServer::accept()
 {
     acceptor_.async_accept(
-        [this](const boost::system::error_code& ec, net::ip::tcp::socket socket)
+        [this](const boost::system::error_code& ec,
+            net::ip::tcp::socket socket)
         {
             if (!acceptor_.is_open())
             {
@@ -49,8 +50,9 @@ void ProxyServer::accept()
             }
             if (!ec)
             {
-                sessionManager_.start(std::make_shared<ProxySession>(std::move(socket),
-                    sessionManager_));
+                sessionManager_.start(
+                    std::make_shared<ProxySession>(std::move(socket),
+                        sessionManager_));
             }
             else
             {
@@ -58,6 +60,16 @@ void ProxyServer::accept()
             }
 
             accept();
+        });
+}
+
+void ProxyServer::await_stop()
+{
+    signals_.async_wait(
+        [this](const boost::system::error_code& ec, int signo)
+        {
+            acceptor_.close();
+            sessionManager_.stop_all();
         });
 }
 

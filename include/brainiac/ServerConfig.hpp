@@ -5,37 +5,34 @@
 #include <brainiac/ConfigHint.hpp>
 #include <boost/json.hpp>
 
+#include <optional>
+#include <variant>
+
 namespace brainiac {
 
 class ServerConfig
 {
-public:
-    ServerConfig();
-
-    template<typename ConfigValue>
-    void set(ConfigHint hint, const ConfigValue& value)
-    {
-        config_[hint] = value;
-    }
-
-    template<typename ConfigValue>
-    void set(ConfigHint hint, ConfigValue&& value)
-    {
-        config_[hint] = std::forward<ConfigValue>(value);
-    }
-
-    template<typename ConfigValue>
-    std::optional<ConfigValue> get(ConfigHint hint) const
-    {
-    }
-
-private:
-    using config_value = std::variant<
+    using ConfigValue = std::variant<
         std::int64_t,
         boost::json::string
     >;
 
-    std::unordered_map<ConfigHint, config_value> config_;
+public:
+    ServerConfig();
+
+    template<typename Value>
+    std::optional<Value> get(ConfigHint hint) const
+    {
+        ConfigValue value = config_.at(hint);
+        if (std::holds_alternative<Value>(value))
+        {
+            return std::optional(std::get<Value>(value));
+        }
+        return std::nullopt;
+    }
+
+private:
+    std::unordered_map<ConfigHint, ConfigValue> config_;
 };
 
 } // namespace brainiac

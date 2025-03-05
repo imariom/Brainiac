@@ -3,8 +3,7 @@
 
 #include <brainiac/Config.hpp>
 #include <brainiac/ServerConfig.hpp>
-#include <brainiac/ProxySession.hpp>
-#include <brainiac/ConfigHint.hpp>
+#include <brainiac/SessionManager.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
